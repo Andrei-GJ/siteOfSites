@@ -6,15 +6,20 @@ RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     libicu-dev \
+    libpq-dev \
     && docker-php-ext-install \
     intl \
     opcache \
     pdo \
     pdo_mysql \
+    pdo_pgsql \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Habilitar el módulo rewrite de Apache (necesario para Symfony .htaccess/rutas)
 RUN a2enmod rewrite
+
+# Permitir que Apache procese archivos .htaccess
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
 # Cambiar la raíz de documentos de Apache a la carpeta /public de Symfony
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
