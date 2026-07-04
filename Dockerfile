@@ -32,10 +32,10 @@ COPY . /var/www/html
 
 # Instalar las dependencias de Composer para producción
 ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV APP_ENV prod
 RUN composer install --no-dev --optimize-autoloader
 
 # Ejecutar comandos de Symfony para producción (limpiar caché y compilar assets)
-ENV APP_ENV prod
 RUN php bin/console cache:clear
 RUN php bin/console asset-map:compile
 
