@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="relative overflow-hidden min-h-screen flex flex-col justify-between">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-600 rounded-full blur-3xl opacity-5 pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600 rounded-full blur-3xl opacity-5 pointer-events-none"></div>
+
+    <header class="border-b border-slate-900 backdrop-blur-md sticky top-0 z-50 bg-slate-950/80">
+        <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+            <nav class="flex items-center gap-4 text-sm font-medium">
+                <button id="tab-sites" class="px-3 py-1.5 rounded-lg transition-all duration-300">Sitios</button>
+                <button id="tab-categories" class="px-3 py-1.5 rounded-lg transition-all duration-300">Categorías</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-1 w-full">
+
+        <div id="view-sites" class="space-y-6">
+            <div id="form-site-container" class="bg-slate-900/30 border border-slate-800 rounded-xl p-5">
+                <form id="form-site" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Nombre</label>
+                        <input type="text" id="site-name-input" placeholder="Google" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors" required />
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Enlace (URL)</label>
+                        <input type="url" id="site-url-input" placeholder="https://google.com" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors" required />
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="flex-1">
+                            <label class="block text-xs text-slate-400 mb-1">Categoría</label>
+                            <select id="site-category-select" class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-blue-500 transition-colors" required>
+                                <option value="" disabled selected>Seleccionar...</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-300 text-xs self-end h-8">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="sites-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            </div>
+        </div>
+
+        <div id="view-categories" class="space-y-6 hidden">
+            <form id="form-category" class="flex gap-2 max-w-sm bg-slate-900/30 border border-slate-800 rounded-xl p-4">
+                <input type="text" id="category-name-input" placeholder="Nueva categoría..." class="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors" required />
+                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg transition duration-300 text-xs">
+                    Guardar
+                </button>
+            </form>
+
+            <div id="categories-list-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<div class="hidden">
+    <div id="site-item-template" class="site-card group bg-slate-900/40 border border-slate-800 hover:border-slate-700 rounded-xl p-5 transition duration-300">
+        <div class="flex items-start justify-between">
+            <span class="site-category-badge text-[10px] font-semibold px-2 py-0.5 rounded bg-blue-500/10 text-blue-400">Categoría</span>
+            <button class="btn-delete-site text-xs text-rose-500/70 hover:text-rose-400 transition-colors font-medium">Eliminar</button>
+        </div>
+        <h3 class="site-name text-base font-bold mt-3 mb-1 text-white group-hover:text-blue-400 transition-colors">Nombre</h3>
+        <a href="" target="_blank" class="site-url inline-flex items-center gap-1.5 text-xs text-blue-400 group-hover:text-blue-300 transition-colors">
+            <span>Visitar Sitio</span>
+            <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+    </div>
+
+    <div id="category-item-template" class="flex items-center justify-between bg-slate-900/40 hover:bg-slate-900/60 px-3 py-2 rounded-lg border border-slate-800 text-xs text-slate-300">
+        <span class="category-name">Categoría</span>
+        <button class="btn-delete-category text-xs text-rose-500/70 hover:text-rose-400 transition-colors font-semibold ml-2">✕</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="module" src="{{ asset('sites.js') }}"></script>
+{% endblock %}

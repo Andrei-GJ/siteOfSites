@@ -1,0 +1,4 @@
+/* Put custom CSS transitions or styles here */
+html {
+    scroll-behavior: smooth;
+}
